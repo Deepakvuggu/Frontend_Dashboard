@@ -1,25 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Loginpage from './components/Auth/Loginpage';
+import Signuppage from './components/Signuppage'; // ✅ add this (adjust path if needed)
+
+import Dashboardpage from "./pages/Dashboardpage";
+import Scanpage from "./pages/Scanpage"; // ✅ keep only one import
+
+function PrivateRoute({ children }) {
+  const authed = localStorage.getItem("aps_auth") === "true";
+  return authed ? children : <Navigate to="/" replace />;
 }
 
-export default App;
+function PublicRoute({ children }) {
+  const authed = localStorage.getItem("aps_auth") === "true";
+  return authed ? <Navigate to="/dashboard" replace /> : children;
+}
+
+export default function App() {
+  const authed = localStorage.getItem("aps_auth") === "true";
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* ✅ Login */}
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <Loginpage />
+            </PublicRoute>
+          }
+        />
+
+        {/* ✅ Signup */}
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signuppage />
+            </PublicRoute>
+          }
+        />
+
+        {/* ✅ Dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboardpage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* ✅ Scan */}
+        <Route
+          path="/scan"
+          element={
+            <PrivateRoute>
+              <Scanpage />
+            </PrivateRoute>
+          }
+        />
+
+        {/* ✅ Fallback */}
+        <Route path="*" element={<Navigate to={authed ? "/dashboard" : "/"} replace />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}

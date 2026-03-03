@@ -1,0 +1,868 @@
+/* ===== Theme tokens (instant toggle via data-theme) ===== */
+:root {
+    --accent: #0cc8a8;
+
+    /* severity (fixed) */
+    --sev-crit: #ef4444;
+    --sev-high: #f97316;
+    --sev-med: #f59e0b;
+    --sev-low: #22c55e;
+
+    --radius-lg: 18px;
+    --radius-md: 14px;
+
+    --shadow-1: 0 20px 60px rgba(0, 0, 0, 0.35);
+    --shadow-2: 0 10px 25px rgba(0, 0, 0, 0.25);
+
+    --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+:root[data-theme="dark"] {
+    --bg0: #0f0f0f;
+    --bg1: #121212;
+    --surface: rgba(255, 255, 255, 0.06);
+    --surface2: rgba(255, 255, 255, 0.08);
+    --border: rgba(255, 255, 255, 0.12);
+    --border2: rgba(255, 255, 255, 0.16);
+    --text: rgba(255, 255, 255, 0.92);
+    --muted: rgba(255, 255, 255, 0.68);
+    --muted2: rgba(255, 255, 255, 0.52);
+    --inputBg: rgba(255, 255, 255, 0.06);
+    --inputPh: rgba(255, 255, 255, 0.45);
+}
+
+:root[data-theme="light"] {
+    --bg0: #f5f5f5;
+    --bg1: #ffffff;
+    --surface: rgba(0, 0, 0, 0.03);
+    --surface2: rgba(0, 0, 0, 0.05);
+    --border: rgba(0, 0, 0, 0.10);
+    --border2: rgba(0, 0, 0, 0.14);
+    --text: rgba(0, 0, 0, 0.88);
+    --muted: rgba(0, 0, 0, 0.62);
+    --muted2: rgba(0, 0, 0, 0.48);
+    --inputBg: rgba(0, 0, 0, 0.03);
+    --inputPh: rgba(0, 0, 0, 0.40);
+
+    --shadow-1: 0 20px 60px rgba(0, 0, 0, 0.12);
+    --shadow-2: 0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+/* ===== Base ===== */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--text);
+    background: var(--bg0);
+}
+
+/* ===== Shell background (similar to screenshot gradient) ===== */
+.authShell {
+    min-height: 100vh;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+
+    /* Dark b2b gradient like the reference */
+    background:
+        radial-gradient(900px 500px at 25% 20%, rgba(12, 200, 168, 0.14), transparent 60%),
+        radial-gradient(900px 500px at 75% 75%, rgba(255, 120, 60, 0.18), transparent 60%),
+        radial-gradient(900px 700px at 90% 10%, rgba(60, 160, 255, 0.10), transparent 55%),
+        linear-gradient(120deg, var(--bg0), var(--bg1));
+}
+
+
+
+
+/* top-left brand */
+.brand {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.brandDot {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 10px 24px rgba(12, 200, 168, 0.25);
+}
+
+.brandText {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    opacity: 0.92;
+}
+
+/* theme toggle */
+.themeToggle {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+.togglePill {
+    width: 42px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    position: relative;
+}
+
+.toggleKnob {
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    position: absolute;
+    top: 2px;
+    transition: transform 180ms ease;
+    background: var(--accent);
+}
+
+.toggleKnob.isDark {
+    transform: translateX(2px);
+}
+
+.toggleKnob.isLight {
+    transform: translateX(20px);
+}
+
+.toggleLabel {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+/* ===== Layout ===== */
+.authGrid {
+    max-width: 1120px;
+    margin: 0 auto;
+    min-height: calc(100vh - 56px);
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 44px;
+    align-items: center;
+}
+
+/* Left hero */
+.heroTitle {
+    font-size: 44px;
+    line-height: 1.05;
+    margin: 0 0 22px 0;
+    letter-spacing: -0.8px;
+}
+
+.accent {
+    color: var(--accent);
+}
+
+.heroBlock {
+    margin-top: 10px;
+    padding-top: 6px;
+}
+
+.heroSubtitle {
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.bulletList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+    max-width: 520px;
+}
+
+.bulletList li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.check {
+    color: var(--accent);
+    font-weight: 800;
+    margin-top: 2px;
+}
+
+/* Trustpilot */
+.trustpilot {
+    margin-top: 30px;
+    display: grid;
+    gap: 6px;
+}
+
+.trustHeader {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.trustStar {
+    color: #22c55e;
+}
+
+.trustRow {
+    display: inline-flex;
+    gap: 8px;
+    align-items: baseline;
+}
+
+.trustRating {
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.trustMeta {
+    color: var(--muted2);
+    font-size: 12px;
+}
+
+/* Right card */
+.cardWrap {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card {
+    width: min(440px, 100%);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-1);
+    backdrop-filter: blur(14px);
+    padding: 22px;
+}
+
+:root[data-theme="light"] .card {
+    background: rgba(255, 255, 255, 0.82);
+}
+
+/* Card header */
+.cardHeader {
+    text-align: center;
+    padding: 6px 10px 10px;
+}
+
+.cardTitle {
+    margin: 6px 0 6px 0;
+    font-size: 28px;
+    letter-spacing: -0.3px;
+}
+
+.cardHint {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.link {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* Form controls */
+.form {
+    margin-top: 10px;
+    display: grid;
+    gap: 12px;
+}
+
+.field {
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--inputBg);
+    color: var(--text);
+    padding: 0 14px;
+    outline: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+.input::placeholder {
+    color: var(--inputPh);
+}
+
+.input:focus {
+    border-color: rgba(12, 200, 168, 0.55);
+    box-shadow: 0 0 0 4px rgba(12, 200, 168, 0.14);
+    background: var(--surface2);
+}
+
+.passwordField .input {
+    padding-right: 46px;
+}
+
+.eyeBtn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
+}
+
+.eyeBtn:hover {
+    border-color: var(--border);
+    background: var(--surface);
+}
+
+.eyeIcon {
+    display: block;
+    width: 18px;
+    height: 12px;
+    margin: 0 auto;
+    border: 2px solid var(--muted2);
+    border-radius: 999px;
+    position: relative;
+}
+
+.eyeIcon::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: 999px;
+    background: var(--muted2);
+    opacity: 0.45;
+}
+
+/* Checkbox row */
+.checkboxRow {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding-top: 2px;
+}
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: var(--accent);
+}
+
+.checkboxText {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+/* Primary CTA */
+.primaryBtn {
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 200, 168, 0.35);
+    background: rgba(12, 200, 168, 0.22);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 120ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.primaryBtn:hover {
+    background: rgba(12, 200, 168, 0.30);
+    border-color: rgba(12, 200, 168, 0.55);
+}
+
+.primaryBtn:active {
+    transform: translateY(1px);
+}
+
+/* Divider + socials */
+.divider {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin: 4px 0 0;
+}
+
+.divider span:first-child,
+.divider span:last-child {
+    height: 1px;
+    background: var(--border);
+}
+
+.dividerText {
+    color: var(--muted2);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.socialRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.socialBtn {
+    height: 38px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.22);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease, transform 120ms ease;
+}
+
+:root[data-theme="light"] .socialBtn {
+    background: rgba(255, 255, 255, 0.65);
+}
+
+.socialBtn:hover {
+    background: var(--surface2);
+    border-color: var(--border2);
+}
+
+.socialBtn:active {
+    transform: translateY(1px);
+}
+
+.apple {
+    font-weight: 900;
+}
+
+.apple::before {
+    content: "";
+    font-size: 16px;
+}
+
+.google {
+    font-weight: 900;
+    font-size: 14px;
+}
+
+.meta {
+    font-weight: 900;
+    font-size: 16px;
+}
+
+/* Severity chips (for your SaaS look) */
+.severityRow {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.chip {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.chip.crit {
+    border-color: rgba(239, 68, 68, 0.45);
+    color: var(--sev-crit);
+}
+
+.chip.high {
+    border-color: rgba(249, 115, 22, 0.45);
+    color: var(--sev-high);
+}
+
+.chip.med {
+    border-color: rgba(245, 158, 11, 0.45);
+    color: var(--sev-med);
+}
+
+.chip.low {
+    border-color: rgba(34, 197, 94, 0.45);
+    color: var(--sev-low);
+}
+
+/* ===== EXACT SIGNUP CARD REPLICA (RIGHT SIDE) ===== */
+.cardWrap {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* White card like screenshot (even in dark mode) */
+.signupCard {
+    width: min(460px, 100%);
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.35);
+    padding: 22px 22px 18px;
+}
+
+/* Header */
+.signupHeader {
+    text-align: center;
+    padding: 4px 10px 6px;
+}
+
+.signupTitle {
+    margin: 6px 0 6px;
+    font-size: 34px;
+    line-height: 1.05;
+    letter-spacing: -0.6px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.signupSub {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.55);
+    font-weight: 500;
+}
+
+.signupLink {
+    color: #0cc8a8;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.signupLink:hover {
+    text-decoration: underline;
+}
+
+/* Form spacing like screenshot */
+.signupForm {
+    margin-top: 10px;
+    display: grid;
+    gap: 14px;
+}
+
+/* Inputs: white, soft grey border, big rounded */
+.signupInput {
+    height: 46px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.78);
+    outline: none;
+    transition: box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.signupInput::placeholder {
+    color: rgba(0, 0, 0, 0.35);
+    font-weight: 500;
+}
+
+/* Subtle focus ring (teal) */
+.signupInput:focus {
+    border-color: rgba(12, 200, 168, 0.55);
+    box-shadow: 0 0 0 4px rgba(12, 200, 168, 0.18);
+}
+
+/* Password field with icon on right */
+.signupPasswordWrap {
+    position: relative;
+}
+
+.signupPasswordInput {
+    padding-right: 48px;
+}
+
+.signupEyeBtn {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.signupEyeBtn:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+/* little "lashes" icon feel */
+.signupEye {
+    display: block;
+    width: 18px;
+    height: 10px;
+    margin: 0 auto;
+    border: 2px solid rgba(0, 0, 0, 0.35);
+    border-top: 0;
+    border-radius: 0 0 999px 999px;
+    position: relative;
+}
+
+.signupEye::after {
+    content: "";
+    position: absolute;
+    left: -2px;
+    right: -2px;
+    top: -6px;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.28);
+    border-radius: 999px;
+    opacity: 0.55;
+}
+
+/* Checkbox row */
+.signupCheckRow {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    gap: 10px;
+    align-items: start;
+    margin-top: -2px;
+}
+
+.signupCheckbox {
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    accent-color: #0cc8a8;
+}
+
+.signupCheckText {
+    font-size: 12px;
+    line-height: 1.35;
+    color: rgba(0, 0, 0, 0.55);
+    font-weight: 500;
+}
+
+/* CTA teal pill */
+.signupCTA {
+    margin-top: 4px;
+    height: 46px;
+    border-radius: 999px;
+    border: 0;
+    background: #0cc8a8;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 120ms ease, filter 150ms ease;
+}
+
+.signupCTA:hover {
+    filter: brightness(0.96);
+}
+
+.signupCTA:active {
+    transform: translateY(1px);
+}
+
+/* Social pills row */
+.signupSocialRow {
+    margin-top: 2px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+}
+
+.signupSocial {
+    height: 40px;
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+/* Apple black pill */
+.signupApple {
+    background: #0b0b0b;
+    color: #ffffff;
+}
+
+.signupAppleIcon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Google very light pill */
+.signupGoogle {
+    background: #f2f2f2;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.signupGoogleIcon {
+    font-size: 14px;
+    font-weight: 900;
+}
+
+/* Meta blue pill */
+.signupMeta {
+    background: #2f61d6;
+    color: #ffffff;
+}
+
+.signupMetaIcon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Responsive: center card */
+@media (max-width: 980px) {
+    .cardWrap {
+        justify-content: center;
+    }
+}
+
+/* Validation helpers */
+.fieldBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fieldError {
+    font-size: 12px;
+    line-height: 1.2;
+    color: #ff4d4f;
+    margin-left: 2px;
+}
+
+.signupInput.isError,
+.signupPasswordInput.isError {
+    border-color: #ff4d4f !important;
+    box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.15);
+}
+
+.signupCheckRow.isErrorRow .signupCheckText {
+    color: #ffb4b5;
+}
+
+/* Eye icon state hook (use your existing icon styles; this just enables open state) */
+.signupEye.isOpen {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.signupSocialRow {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Base button */
+.signupSocial {
+    width: 120px;
+    height: 44px;
+    border-radius: 999px;
+    /* pill shape */
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* Apple */
+.signupApple {
+    background: #000000;
+}
+
+/* Google */
+.signupGoogle {
+    background: #e9e3df;
+    /* soft beige-gray like screenshot */
+}
+
+/* Meta */
+.signupMeta {
+    background: #3b6fd8;
+}
+
+/* Icon sizing */
+.socialIconImg {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Hover */
+.signupSocial:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .authGrid {
+        grid-template-columns: 1fr;
+        gap: 26px;
+        padding-top: 36px;
+    }
+
+    .cardWrap {
+        justify-content: center;
+    }
+
+    .heroTitle {
+        font-size: 38px;
+    }
+}
+/* reuse topbar icon button styles on login */
+.authIconToggle{
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  z-index: 10;
+}
+
+/* ensure authShell is positioning context */
+.authShell{
+  position: relative;
+}

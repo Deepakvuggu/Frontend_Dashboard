@@ -1,0 +1,727 @@
+/* Uses your dashboard vars: --bg, --card, --border, --text, --muted, --teal */
+:root[data-theme="dark"] {
+    --teal: #0cc8a8;
+
+    --bg: #070b10;
+    /* page background */
+    --panel: #0b1017;
+    /* sidebar / topbar */
+    --card: #0f1720;
+    /* cards */
+    --card2: #0c121b;
+    /* inner panels */
+    --text: #e8eef6;
+    --muted: #9aa7b7;
+
+    --border: rgba(255, 255, 255, 0.08);
+    --border2: rgba(255, 255, 255, 0.12);
+
+    --shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+    --shadowSoft: 0 10px 24px rgba(0, 0, 0, 0.35);
+
+    --glow: 0 0 0 6px rgba(12, 200, 168, 0.10);
+}
+
+.scanPage {
+    padding: 14px 18px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--bg);
+    min-height: calc(100vh - 56px);
+}
+
+.scanHeaderCard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+}
+
+.scanHeaderLeft {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--border);
+}
+
+.scanRing {
+    width: 92px;
+    height: 92px;
+    border-radius: 999px;
+    background: conic-gradient(var(--teal) 0deg, rgba(148, 163, 184, 0.25) 0deg);
+    display: grid;
+    place-items: center;
+}
+
+.scanRingInner {
+    width: 78px;
+    height: 78px;
+    border-radius: 999px;
+    background: #0b1220;
+    display: grid;
+    place-items: center;
+    color: #fff;
+}
+
+.scanRingPct {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.scanRingSub {
+    font-size: 10px;
+    opacity: 0.75;
+    margin-top: -35px;
+}
+
+.scanHeaderRight {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+}
+
+.scanStepsRow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    align-items: start;
+}
+
+.scanStep {
+    display: grid;
+    grid-template-rows: 32px auto;
+    justify-items: center;
+    gap: 6px;
+    color: var(--muted);
+    position: relative;
+}
+
+.scanStepIconWrap {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.10);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.scanStepIcon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    opacity: 0.7;
+}
+
+.scanStep.isActive .scanStepIconWrap {
+    background: rgba(12, 200, 168, 0.15);
+    border-color: rgba(12, 200, 168, 0.45);
+    box-shadow: 0 0 0 6px rgba(12, 200, 168, 0.10);
+}
+
+.scanStep.isActive .scanStepIcon {
+    opacity: 1;
+}
+
+.scanStep::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: -55%;
+    right: 60%;
+    height: 2px;
+    background: rgba(148, 163, 184, 0.25);
+}
+
+.scanStep:first-child::before {
+    display: none;
+}
+
+.scanStepDot {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.12);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.scanStep.isActive {
+    color: var(--teal);
+}
+
+.scanStep.isActive .scanStepDot {
+    background: rgba(12, 200, 168, 0.14);
+    border-color: rgba(12, 200, 168, 0.45);
+    box-shadow: 0 0 0 6px rgba(12, 200, 168, 0.10);
+}
+
+.scanStepLabel {
+    font-size: 11px;
+}
+
+.scanMetaRow {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(90px, 1fr));
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.scanMetaLabel {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.scanMetaValue {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 2px;
+}
+
+.scanMetaValue.isTeal {
+    color: var(--teal);
+}
+
+.scanBodyGrid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 12px;
+    align-items: start;
+}
+
+/* Console card */
+.scanConsoleCard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.scanConsoleTop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(148, 163, 184, 0.06);
+}
+
+.scanConsoleTitle {
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dotLive {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--teal);
+}
+
+.scanConsolePill {
+    margin-left: 10px;
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 999px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+}
+
+.pillDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.55);
+}
+
+.scanConsoleRight {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+}
+
+.scanIconBtn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    background: var(--card);
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.scanConsoleTabs {
+    display: flex;
+    gap: 16px;
+    padding: 10px 12px 0;
+}
+
+.scanTab {
+    border: none;
+    background: transparent;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 10px 4px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+}
+
+.scanTab.isActive {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+}
+
+.scanConsoleBody {
+    padding: 12px;
+    height: 520px;
+    overflow: auto;
+}
+
+.scanLog {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--text);
+    white-space: pre-wrap;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.scanEmpty {
+    padding: 18px;
+    color: var(--muted);
+}
+
+.scanEmptyTitle {
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.scanEmptySub {
+    font-size: 12px;
+}
+
+/* Finding panel */
+.findingPanel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.findingHeader {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+
+.findingList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.findingCard {
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 12px;
+    padding: 34px;
+    background: rgba(148, 163, 184, 0.04);
+}
+
+.findingTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.findingTime {
+    font-size: 10px;
+    color: var(--muted);
+}
+
+.findingTitle {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--text);
+}
+
+.findingPath {
+    font-size: 11px;
+    color: var(--teal);
+    margin-top: 4px;
+}
+
+.findingDesc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.sevPill {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-weight: 800;
+    border: 1px solid transparent;
+}
+
+.sevPill.crit {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.10);
+    border-color: rgba(239, 68, 68, 0.18);
+}
+
+.sevPill.high {
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.10);
+    border-color: rgba(249, 115, 22, 0.18);
+}
+
+.sevPill.med {
+    color: #eab308;
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.18);
+}
+
+/* Bottom bar */
+.scanBottomBar {
+    height: 36px;
+    border-top: 1px solid var(--border);
+    background: rgba(148, 163, 184, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.scanBottomLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sepDot {
+    opacity: 0.7;
+}
+
+.scanBottomRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.count.crit {
+    color: #ef4444;
+}
+
+.count.high {
+    color: #f97316;
+}
+
+.count.med {
+    color: #eab308;
+}
+
+.count.low {
+    color: #22c55e;
+}
+
+@media (max-width: 1100px) {
+    .scanBodyGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* page background */
+.dbRoot {
+    background: var(--bg);
+}
+
+/* topbar */
+.dbTopbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+}
+
+/* sidebar */
+.dbSidebar {
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+}
+
+.dbBrandText {
+    color: var(--text);
+}
+
+.dbNavItem {
+    color: var(--muted);
+}
+
+.dbNavIcon {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.dbNavItem:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.dbNavItem.isActive {
+    background: rgba(12, 200, 168, 0.14);
+    color: var(--text);
+}
+
+/* user section */
+.dbUser {
+    border-top: 1px solid var(--border);
+}
+
+.dbUserEmail {
+    color: var(--text);
+}
+
+.dbUserRole {
+    color: var(--muted);
+}
+
+
+
+/* scan page background */
+.scanPage {
+    background: var(--bg);
+}
+
+/* scan header card (top big card) */
+.scanHeaderCard {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadowSoft);
+}
+
+/* left ring */
+.scanRing {
+    background: conic-gradient(var(--teal) 0deg, rgba(255, 255, 255, 0.10) 0deg);
+}
+
+.scanRingInner {
+    background: #05080c;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* steps row */
+.scanStep::before {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.scanStepDot,
+.scanStepIconWrap {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.scanStepLabel {
+    color: var(--muted);
+}
+
+.scanStep.isActive .scanStepLabel {
+    color: var(--text);
+}
+
+.scanStep.isActive .scanStepDot,
+.scanStep.isActive .scanStepIconWrap {
+    background: rgba(12, 200, 168, 0.14);
+    border-color: rgba(12, 200, 168, 0.45);
+    box-shadow: var(--glow);
+}
+
+/* meta row */
+.scanMetaRow {
+    border-top: 1px solid var(--border);
+}
+
+.scanMetaLabel {
+    color: var(--muted);
+}
+
+.scanMetaValue {
+    color: var(--text);
+}
+
+.scanMetaValue.isTeal {
+    color: var(--teal);
+}
+
+/* unified console shell */
+.scanConsoleShell {
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+/* top bar spanning both */
+.scanConsoleTopWide {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border);
+}
+
+/* running pill */
+.scanConsolePill {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: var(--muted);
+}
+
+.pillDot {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* left console */
+.scanConsoleLeft {
+    border-right: 1px solid var(--border);
+}
+
+/* tabs */
+.scanConsoleTabs {
+    border-bottom: 1px solid var(--border);
+}
+
+.scanTab {
+    color: var(--muted);
+}
+
+.scanTab.isActive {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+}
+
+/* log area */
+.scanConsoleBody {
+    background: var(--card2);
+}
+
+.scanLog {
+    color: var(--text);
+}
+
+/* finding panel right */
+.findingPanelInner {
+    background: var(--card2);
+}
+
+.findingHeader {
+    color: var(--text);
+}
+
+.findingCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.findingTitle {
+    color: var(--text);
+}
+
+.findingDesc {
+    color: var(--muted);
+}
+
+.findingTime {
+    color: rgba(154, 167, 183, 0.9);
+}
+
+.findingPath {
+    color: var(--teal);
+}
+
+/* header buttons (collapse/close) */
+.scanIconBtn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    color: var(--muted);
+}
+
+.scanIconBtn:hover {
+    border-color: rgba(12, 200, 168, 0.35);
+}
+
+/* bottom bar */
+.scanBottomBar {
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+}
+
+.dbTopbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+}
+
+.dbTopbarRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Icon toggle button */
+.dbIconBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.dbIconBtn:hover {
+    border-color: rgba(12, 200, 168, 0.4);
+    background: rgba(12, 200, 168, 0.08);
+}
+
+.dbIconImg {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+/* Normal button */
+.dbBtn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.dbBtnDanger {
+    border-color: rgba(255, 80, 80, 0.4);
+    color: #ff6b6b;
+}
