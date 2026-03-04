@@ -1,21 +1,43 @@
 import React from "react";
 
-export default function Bottombar({ data }) {
+export default function BottomBar({ data }) {
+    const leftStats = [
+        { label: "Sub-Agents", value: data.subAgents },
+        { label: "Parallel Executions", value: data.parallelExecutions },
+        { label: "Operations", value: data.operations },
+    ];
+
+    const severityCounts = [
+        { key: "critical", label: "Critical", value: data.counts.critical },
+        { key: "high", label: "High", value: data.counts.high },
+        { key: "medium", label: "Medium", value: data.counts.medium },
+        { key: "low", label: "Low", value: data.counts.low },
+    ];
+
     return (
         <div className="scanBottomBar">
+            {/* Left stats */}
             <div className="scanBottomLeft">
-                <span>Sub-Agents: {data.subAgents}</span>
-                <span className="sepDot">•</span>
-                <span>Parallel Executions: {data.parallelExecutions}</span>
-                <span className="sepDot">•</span>
-                <span>Operations: {data.operations}</span>
+                {leftStats.map((item, index) => (
+                    <React.Fragment key={item.label}>
+                        <span>
+                            {item.label}: {item.value}
+                        </span>
+
+                        {index < leftStats.length - 1 && (
+                            <span className="sepDot">•</span>
+                        )}
+                    </React.Fragment>
+                ))}
             </div>
 
+            {/* Right severity counts */}
             <div className="scanBottomRight">
-                <span className="count crit">Critical: {data.counts.critical}</span>
-                <span className="count high">High: {data.counts.high}</span>
-                <span className="count med">Medium: {data.counts.medium}</span>
-                <span className="count low">Low: {data.counts.low}</span>
+                {severityCounts.map((sev) => (
+                    <span key={sev.key} className={`count ${sev.key}`}>
+                        {sev.label}: {sev.value}
+                    </span>
+                ))}
             </div>
         </div>
     );

@@ -1,34 +1,27 @@
 import React from "react";
 import clockIcon from "../../assets/icons/refresh.png";
 
-export default function Statstrip({ data }) {
+export default function StatStrip({ data }) {
+  const stats = [
+    { label: "Org", value: data.org },
+    { label: "Owner", value: data.owner },
+    { label: "Total Scans", value: data.totalScans },
+    { label: "Scheduled", value: data.scheduled },
+    { label: "Rescans", value: data.rescans },
+    { label: "Failed Scans", value: data.failedScans },
+  ];
+
   return (
     <div className="dbStrip">
-      <div className="dbStripItem">
-        <span className="dbStripLabel">Org:</span>
-        <span className="dbStripValue">{data.org}</span>
-      </div>
-      <div className="dbStripItem">
-        <span className="dbStripLabel">Owner:</span>
-        <span className="dbStripValue">{data.owner}</span>
-      </div>
-      <div className="dbStripItem">
-        <span className="dbStripLabel">Total Scans:</span>
-        <span className="dbStripValue">{data.totalScans}</span>
-      </div>
-      <div className="dbStripItem">
-        <span className="dbStripLabel">Scheduled:</span>
-        <span className="dbStripValue">{data.scheduled}</span>
-      </div>
-      <div className="dbStripItem">
-        <span className="dbStripLabel">Rescans:</span>
-        <span className="dbStripValue">{data.rescans}</span>
-      </div>
-      <div className="dbStripItem">
-        <span className="dbStripLabel">Failed Scans:</span>
-        <span className="dbStripValue">{data.failedScans}</span>
-      </div>
+      {/* Left stats */}
+      {stats.map((item) => (
+        <div className="dbStripItem" key={item.label}>
+          <span className="dbStripLabel">{item.label}:</span>
+          <span className="dbStripValue">{item.value}</span>
+        </div>
+      ))}
 
+      {/* Right last updated section */}
       <div className="dbStripRight">
         <img
           src={clockIcon}

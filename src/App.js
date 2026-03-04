@@ -1,69 +1,74 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Loginpage from './components/Auth/Loginpage';
-import Signuppage from './components/Signuppage'; // ✅ add this (adjust path if needed)
+import LoginPage from "./components/Auth/Loginpage";
+import SignupPage from "./components/Signuppage";
 
-import Dashboardpage from "./pages/Dashboardpage";
-import Scanpage from "./pages/Scanpage"; // ✅ keep only one import
+import DashboardPage from "./pages/Dashboardpage";
+import ScanPage from "./pages/Scanpage";
 
+const isAuthenticated = () => localStorage.getItem("aps_auth") === "true";
+
+// Protect private pages
 function PrivateRoute({ children }) {
-  const authed = localStorage.getItem("aps_auth") === "true";
-  return authed ? children : <Navigate to="/" replace />;
+  return isAuthenticated() ? children : <Navigate to="/" replace />;
 }
 
+// Prevent logged-in users from accessing auth pages
 function PublicRoute({ children }) {
-  const authed = localStorage.getItem("aps_auth") === "true";
-  return authed ? <Navigate to="/dashboard" replace /> : children;
+  return isAuthenticated() ? <Navigate to="/dashboard" replace /> : children;
 }
 
 export default function App() {
-  const authed = localStorage.getItem("aps_auth") === "true";
+  const authed = isAuthenticated();
 
   return (
     <BrowserRouter>
       <Routes>
-        {/* ✅ Login */}
+        {/* Login */}
         <Route
           path="/"
           element={
             <PublicRoute>
-              <Loginpage />
+              <LoginPage />
             </PublicRoute>
           }
         />
 
-        {/* ✅ Signup */}
+        {/* Signup */}
         <Route
           path="/signup"
           element={
             <PublicRoute>
-              <Signuppage />
+              <SignupPage />
             </PublicRoute>
           }
         />
 
-        {/* ✅ Dashboard */}
+        {/* Dashboard */}
         <Route
           path="/dashboard"
           element={
             <PrivateRoute>
-              <Dashboardpage />
+              <DashboardPage />
             </PrivateRoute>
           }
         />
 
-        {/* ✅ Scan */}
+        {/* Scan */}
         <Route
           path="/scan"
           element={
             <PrivateRoute>
-              <Scanpage />
+              <ScanPage />
             </PrivateRoute>
           }
         />
 
-        {/* ✅ Fallback */}
-        <Route path="*" element={<Navigate to={authed ? "/dashboard" : "/"} replace />} />
+        {/* Fallback */}
+        <Route
+          path="*"
+          element={<Navigate to={authed ? "/dashboard" : "/"} replace />}
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,12 +1,28 @@
 import React from "react";
 
-export default function Themetoggle({ theme, onToggle }) {
+const ThemeToggle = ({ theme, onToggle }) => {
+  const isDark = theme === "dark";
+
   return (
-    <button className="themeToggle themeToggleDash" onClick={onToggle} type="button" aria-label="Toggle theme">
+    <button
+      type="button"
+      className="themeToggle themeToggleDash"
+      onClick={onToggle}
+      aria-label="Toggle theme"
+    >
+      {/* Toggle switch */}
       <span className="togglePill">
-        <span className={`toggleKnob ${theme === "dark" ? "isDark" : "isLight"}`} />
+        <span
+          className={`toggleKnob ${isDark ? "isDark" : "isLight"}`}
+        />
       </span>
-      <span className="toggleLabel">{theme === "dark" ? "Dark" : "Light"}</span>
+
+      {/* Theme label */}
+      <span className="toggleLabel">
+        {isDark ? "Dark" : "Light"}
+      </span>
     </button>
   );
-}
+};
+
+export default ThemeToggle;

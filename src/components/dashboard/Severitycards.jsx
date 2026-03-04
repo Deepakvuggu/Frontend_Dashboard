@@ -8,27 +8,29 @@ import icLow from "../../assets/icons/severity.png";
 import deltaUp from "../../assets/icons/up.png";
 import deltaDown from "../../assets/icons/down.png";
 
-const iconByKey = {
+const ICONS = {
   critical: icCritical,
   high: icHigh,
   medium: icMedium,
   low: icLow,
 };
 
-export default function Severitycards({ items }) {
+export default function SeverityCards({ items = [] }) {
   return (
     <div className="sevGrid">
-      {items.map((s) => {
-        const deltaIcon = s.deltaType === "up" ? deltaUp : deltaDown;
+      {items.map((item) => {
+        const isUp = item.deltaType === "up";
+        const deltaIcon = isUp ? deltaUp : deltaDown;
 
         return (
-          <div key={s.key} className="sevCard">
+          <div key={item.key} className="sevCard">
+            {/* Card header */}
             <div className="sevTop">
-              <div className="sevLabel">{s.label}</div>
+              <div className="sevLabel">{item.label}</div>
 
-              <div className={`sevIconWrap ${s.key}`}>
+              <div className={`sevIconWrap ${item.key}`}>
                 <img
-                  src={iconByKey[s.key]}
+                  src={ICONS[item.key]}
                   alt=""
                   className="sevIconImg"
                   aria-hidden="true"
@@ -36,17 +38,18 @@ export default function Severitycards({ items }) {
               </div>
             </div>
 
+            {/* Value + delta */}
             <div className="sevValueRow">
-              <div className="sevValue">{s.value}</div>
+              <div className="sevValue">{item.value}</div>
 
-              <div className={`sevDelta ${s.deltaType === "up" ? "isUp" : "isDown"}`}>
+              <div className={`sevDelta ${isUp ? "isUp" : "isDown"}`}>
                 <img
                   src={deltaIcon}
                   alt=""
                   className="sevDeltaIcon"
                   aria-hidden="true"
                 />
-                <span>{s.delta}</span>
+                <span>{item.delta}</span>
               </div>
             </div>
           </div>

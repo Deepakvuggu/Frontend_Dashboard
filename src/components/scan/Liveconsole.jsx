@@ -1,65 +1,81 @@
 import React, { useMemo, useState } from "react";
 
-export default function Liveconsole({ logs }) {
-    const [tab, setTab] = useState("activity");
+const TABS = {
+  activity: "activity",
+  loops: "loops",
+};
 
-    const text = useMemo(() => {
-        const joined = logs
-            .map((l) => `${l.t} ${l.txt}`)
-            .join("\n\n");
-        return joined;
-    }, [logs]);
+export default function LiveConsole({ logs = [] }) {
+  const [tab, setTab] = useState(TABS.activity);
 
-    return (
-        <section className="scanConsoleCard">
-            <div className="scanConsoleTop">
-                <div className="scanConsoleTitle">
-                    <span className="dotLive" aria-hidden="true" />
-                    Live Scan Console
-                </div>
+  const activityText = useMemo(() => {
+    return logs
+      .map((log) => `${log.t} ${log.txt}`)
+      .join("\n\n");
+  }, [logs]);
 
-                <div className="scanConsolePill">
-                    <span className="pillDot" aria-hidden="true" />
-                    Running...
-                </div>
+  const isActivity = tab === TABS.activity;
 
-                <div className="scanConsoleRight">
-                    <button className="scanIconBtn" type="button" aria-label="Collapse">
-                        ˅
-                    </button>
-                    <button className="scanIconBtn" type="button" aria-label="Close">
-                        ×
-                    </button>
-                </div>
+  return (
+    <section className="scanConsoleCard">
+      {/* Header */}
+      <div className="scanConsoleTop">
+        <div className="scanConsoleTitle">
+          <span className="dotLive" aria-hidden="true" />
+          Live Scan Console
+        </div>
+
+        <div className="scanConsolePill">
+          <span className="pillDot" aria-hidden="true" />
+          Running...
+        </div>
+
+        <div className="scanConsoleRight">
+          <button type="button" className="scanIconBtn" aria-label="Collapse">
+            ˅
+          </button>
+          <button type="button" className="scanIconBtn" aria-label="Close">
+            ×
+          </button>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="scanConsoleTabs" role="tablist" aria-label="Console tabs">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={isActivity}
+          className={`scanTab ${isActivity ? "isActive" : ""}`}
+          onClick={() => setTab(TABS.activity)}
+        >
+          Activity Log
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          aria-selected={!isActivity}
+          className={`scanTab ${!isActivity ? "isActive" : ""}`}
+          onClick={() => setTab(TABS.loops)}
+        >
+          Verification Loops
+        </button>
+      </div>
+
+      {/* Body */}
+      <div className="scanConsoleBody">
+        {isActivity ? (
+          <pre className="scanLog">{activityText}</pre>
+        ) : (
+          <div className="scanEmpty">
+            <div className="scanEmptyTitle">No verification loops yet</div>
+            <div className="scanEmptySub">
+              They will appear here once the scanner begins validating findings.
             </div>
-
-            <div className="scanConsoleTabs">
-                <button
-                    type="button"
-                    className={`scanTab ${tab === "activity" ? "isActive" : ""}`}
-                    onClick={() => setTab("activity")}
-                >
-                    Activity Log
-                </button>
-                <button
-                    type="button"
-                    className={`scanTab ${tab === "loops" ? "isActive" : ""}`}
-                    onClick={() => setTab("loops")}
-                >
-                    Verification Loops
-                </button>
-            </div>
-
-            <div className="scanConsoleBody">
-                {tab === "activity" ? (
-                    <pre className="scanLog">{text}</pre>
-                ) : (
-                    <div className="scanEmpty">
-                        <div className="scanEmptyTitle">No verification loops yet</div>
-                        <div className="scanEmptySub">They will appear here once the scanner begins validating findings.</div>
-                    </div>
-                )}
-            </div>
-        </section>
-    );
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
